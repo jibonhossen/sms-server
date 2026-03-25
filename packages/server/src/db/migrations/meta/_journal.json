@@ -1,0 +1,34 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1774328825306,
+      "tag": "0000_perfect_next_avengers",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1774329936668,
+      "tag": "0001_serious_bloodaxe",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1774333743531,
+      "tag": "0002_mushy_boomer",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1774334541602,
+      "tag": "0003_glamorous_gravity",
+      "breakpoints": true
+    }
+  ]
+}

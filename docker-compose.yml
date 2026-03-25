@@ -1,0 +1,52 @@
+version: '3.10'
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: sms-gateway-db
+    environment:
+      POSTGRES_USER: sms_gateway
+      POSTGRES_PASSWORD: sms_gateway_password
+      POSTGRES_DB: sms_gateway
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sms_gateway"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  server:
+    build:
+      context: ./packages/server
+      dockerfile: Dockerfile
+    container_name: sms-gateway-server
+    environment:
+      DATABASE_URL: postgresql://sms_gateway:sms_gateway_password@postgres:5432/sms_gateway
+      PORT: 3000
+      NODE_ENV: production
+      API_KEY_SECRET: ${API_KEY_SECRET:-your-secret-key-change-in-production}
+      WEBHOOK_SECRET: ${WEBHOOK_SECRET:-webhook-secret-change-in-production}
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  dashboard:
+    build:
+      context: ./packages/dashboard
+      dockerfile: Dockerfile
+    container_name: sms-gateway-dashboard
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3000
+    ports:
+      - "3001:3000"
+    depends_on:
+      - server
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

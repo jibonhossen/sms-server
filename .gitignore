@@ -5,6 +5,12 @@ node_modules
 out
 dist
 *.tgz
+*.gz
+.next
+.turbo
+.open-next
+.vercel
+.wrangler
 
 # code coverage
 coverage

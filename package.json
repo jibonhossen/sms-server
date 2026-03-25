@@ -1,12 +1,16 @@
 {
-  "name": "sms-server",
-  "module": "index.ts",
-  "type": "module",
+  "name": "sms-gateway",
   "private": true,
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "bun run --cwd packages/server dev & bun run --cwd packages/dashboard dev",
+    "build": "bun run --cwd packages/server build && bun run --cwd packages/dashboard build",
+    "db:generate": "bun run --cwd packages/server db:generate",
+    "db:migrate": "bun run --cwd packages/server db:migrate",
+    "db:studio": "bun run --cwd packages/server db:studio",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down"
   }
 }
